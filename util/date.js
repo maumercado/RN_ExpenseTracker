@@ -5,3 +5,7 @@ export const getFormattedDate = (date) => {
 
   return `${year}-${month.toString().padStart(2, '0')}-${day}`
 }
+
+export const getDateMinusDays = (date, days) => {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - days)
+}

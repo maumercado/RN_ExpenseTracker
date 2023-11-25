@@ -14,10 +14,16 @@ function ManageExpense ({ route, navigation }) {
     })
   }, [navigation, isEditing])
 
+  function deleteExpenseHandler () {
+    navigation.goBack()
+  }
+
   function cancelHandler () {
+    navigation.goBack()
   }
 
   function confirmHandler () {
+    navigation.goBack()
   }
 
   return (
@@ -45,7 +51,7 @@ function ManageExpense ({ route, navigation }) {
             icon='trash'
             size={24}
             color={GlobalStyles.colors.error500}
-            onPress={() => {}}
+            onPress={deleteExpenseHandler}
           />
         </View>}
     </View>
