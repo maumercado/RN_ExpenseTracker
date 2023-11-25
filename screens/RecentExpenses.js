@@ -12,7 +12,7 @@ function RecentExpenses () {
   })
 
   return (
-    <ExpensesOutput expenses={recentExpenses} expensesPeriod='Recent' />
+    <ExpensesOutput expenses={recentExpenses} expensesPeriod='Recent' fallbackText='No Recent Expenses Found' />
   )
 }
 
