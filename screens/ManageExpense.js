@@ -4,6 +4,8 @@ import { View, StyleSheet } from 'react-native'
 import { GlobalStyles } from '../constants/styles'
 import { ExpensesContext } from '../store/expenses-context'
 
+import ExpenseForm from '../components/ManageExpense/ExpenseForm'
+
 import IconButton from '../UI/IconButton'
 import Button from '../UI/Button'
 
@@ -40,6 +42,7 @@ function ManageExpense ({ route, navigation }) {
     <View
       style={styles.container}
     >
+      <ExpenseForm />
       <View style={styles.buttonsContainer}>
         <Button
           mode='flat'
