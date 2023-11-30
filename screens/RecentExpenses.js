@@ -4,6 +4,7 @@ import ExpensesOutput from '../components/ExpensesOutput/ExpensesOutput'
 import { getDateMinusDays } from '../util/date'
 import { fetchExpenses } from '../util/http'
 import LoadingOverlay from '../UI/LoadingOverlay'
+import ErrorOverlay from '../UI/ErrorOverlay'
 
 function RecentExpenses () {
   const expensesCtx = useContext(ExpensesContext)
@@ -36,7 +37,6 @@ function RecentExpenses () {
     const dateMinus7Days = getDateMinusDays(currentDate, 7)
     return expense.date >= dateMinus7Days && expense.date <= currentDate
   })
-
 
   return (
     <ExpensesOutput expenses={recentExpenses} expensesPeriod='Recent' fallbackText='No Recent Expenses Found' />

@@ -9,6 +9,7 @@ import { ExpensesContext } from '../store/expenses-context'
 import ExpenseForm from '../components/ManageExpense/ExpenseForm'
 import IconButton from '../UI/IconButton'
 import LoadingOverlay from '../UI/LoadingOverlay'
+import ErrorOverlay from '../UI/ErrorOverlay'
 
 function ManageExpense ({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -30,7 +31,6 @@ function ManageExpense ({ route, navigation }) {
       await deleteExpense(expenseId)
       expensesCtx.deleteExpense(expenseId)
       navigation.goBack()
-
     } catch (err) {
       setError(err.message)
       setIsSubmitting(false)
@@ -49,7 +49,7 @@ function ManageExpense ({ route, navigation }) {
         await updateExpense(expenseId, expenseData)
       } else {
         const id = await storeExpense(expenseData)
-        expensesCtx.addExpense({...expenseData, id})
+        expensesCtx.addExpense({ ...expenseData, id })
       }
       navigation.goBack()
     } catch (error) {

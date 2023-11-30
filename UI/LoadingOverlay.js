@@ -1,10 +1,12 @@
-import { ActivityIndicator, View, StyleSheet } from "react-native"
-import { GlobalStyles } from "../constants/styles"
+import { ActivityIndicator, View, StyleSheet } from 'react-native'
+import { GlobalStyles } from '../constants/styles'
 
 function LoadingOverlay () {
-  return <View style={styles.container}>
-    <ActivityIndicator size="large" color="white" />
-  </View>
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size='large' color='white' />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -13,7 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
-    backgroundColor: GlobalStyles.colors.primary700,
+    backgroundColor: GlobalStyles.colors.primary700
   }
 })
 

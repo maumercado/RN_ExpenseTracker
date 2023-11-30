@@ -1,11 +1,13 @@
-import { Text, View, StyleSheet } from "react-native"
-import { GlobalStyles } from "../constants/styles"
+import { Text, View, StyleSheet } from 'react-native'
+import { GlobalStyles } from '../constants/styles'
 
-function ErrorOverlay({message}) {
-  return <View style={styles.container}>
-    <Text style={[styles.text, styles.title]}>An error ocurred!</Text>
-    <Text style={styles.text}>{message}</Text>
-  </View>
+function ErrorOverlay ({ message }) {
+  return (
+    <View style={styles.container}>
+      <Text style={[styles.text, styles.title]}>An error ocurred!</Text>
+      <Text style={styles.text}>{message}</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -14,17 +16,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
-    backgroundColor: GlobalStyles.colors.primary700,
+    backgroundColor: GlobalStyles.colors.primary700
   },
   text: {
     color: 'white',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 8
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold'
-  },
+  }
 
 })
 
