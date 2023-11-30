@@ -12,6 +12,7 @@ import LoadingOverlay from '../UI/LoadingOverlay'
 
 function ManageExpense ({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState()
   const expensesCtx = useContext(ExpensesContext)
   const expenseId = route.params?.expenseId
   const isEditing = !!expenseId
@@ -25,9 +26,15 @@ function ManageExpense ({ route, navigation }) {
 
   async function deleteExpenseHandler () {
     setIsSubmitting(true)
-    await deleteExpense(expenseId)
-    expensesCtx.deleteExpense(expenseId)
-    navigation.goBack()
+    try {
+      await deleteExpense(expenseId)
+      expensesCtx.deleteExpense(expenseId)
+      navigation.goBack()
+
+    } catch (err) {
+      setError(err.message)
+      setIsSubmitting(false)
+    }
   }
 
   function cancelHandler () {
@@ -36,14 +43,23 @@ function ManageExpense ({ route, navigation }) {
 
   async function confirmHandler (expenseData) {
     setIsSubmitting(true)
-    if (isEditing) {
-      expensesCtx.updateExpense(expenseId, expenseData)
-      await updateExpense(expenseId, expenseData)
-    } else {
-      const id = await storeExpense(expenseData)
-      expensesCtx.addExpense({...expenseData, id})
+    try {
+      if (isEditing) {
+        expensesCtx.updateExpense(expenseId, expenseData)
+        await updateExpense(expenseId, expenseData)
+      } else {
+        const id = await storeExpense(expenseData)
+        expensesCtx.addExpense({...expenseData, id})
+      }
+      navigation.goBack()
+    } catch (error) {
+      setError(error.message)
+      setIsSubmitting(false)
     }
-    navigation.goBack()
+  }
+
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} />
   }
 
   if (isSubmitting) {

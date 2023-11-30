@@ -8,15 +8,24 @@ import LoadingOverlay from '../UI/LoadingOverlay'
 function RecentExpenses () {
   const expensesCtx = useContext(ExpensesContext)
   const [isFetching, setIsFetching] = useState(true)
+  const [error, setError] = useState()
 
   useEffect(() => {
     async function getExpenses () {
-      const expenses = await fetchExpenses()
+      try {
+        const expenses = await fetchExpenses()
+        expensesCtx.setExpenses(expenses)
+      } catch (err) {
+        setError(err.message)
+      }
       setIsFetching(false)
-      expensesCtx.setExpenses(expenses)
     }
     getExpenses()
   }, [])
+
+  if (error && !isFetching) {
+    <ErrorOverlay message={error} />
+  }
 
   if (isFetching) {
     return <LoadingOverlay />
