@@ -1,35 +1,9 @@
 import { createContext, useReducer } from 'react'
 
-const DUMMY_EXPENSES = [
-  {
-    id: 'e1',
-    description: 'Car Insurance',
-    amount: 294.67,
-    date: new Date('2023-04-12')
-  },
-  {
-    id: 'e2',
-    description: 'New Desk (Wooden)',
-    amount: 450,
-    date: new Date('2023-04-02')
-  },
-  {
-    id: 'e3',
-    description: 'Toilet Paper',
-    amount: 94.12,
-    date: new Date('2023-11-20')
-  },
-  {
-    id: 'e4',
-    description: 'New TV',
-    amount: 799.49,
-    date: new Date('2023-11-21')
-  }
-]
-
 /* eslint-disable no-case-declarations */
 export const ExpensesContext = createContext({
   expenses: [],
+  setExpenses: (expenses) => {},
   addExpense: ({ description, amount, date }) => {},
   updateExpense: (id, { description, amount, date }) => {},
   deleteExpense: (id) => {}
@@ -37,9 +11,11 @@ export const ExpensesContext = createContext({
 
 function expensesReducer (state, action) {
   switch (action.type) {
+    case 'SET':
+      const invertedExpenses = action.payload.reverse()
+      return invertedExpenses
     case 'ADD':
-      const id = new Date().getTime().toString() + Math.random().toString()
-      return [{ ...action.payload, id }, ...state]
+      return [action.payload, ...state]
     case 'UPDATE':
       const updatedExpenseIndex = state.findIndex(expense => expense.id === action.payload.id)
       const udpatableExpense = state[updatedExpenseIndex]
@@ -55,7 +31,11 @@ function expensesReducer (state, action) {
 }
 
 function ExpensesContextProvider ({ children }) {
-  const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES)
+  const [expensesState, dispatch] = useReducer(expensesReducer, [])
+
+  function setExpenses (expenses) {
+    dispatch({ type: 'SET', payload: expenses })
+  }
 
   function addExpense (expenseData) {
     dispatch({ type: 'ADD', payload: expenseData })
@@ -75,7 +55,8 @@ function ExpensesContextProvider ({ children }) {
         expenses: expensesState,
         addExpense,
         deleteExpense,
-        updateExpense
+        updateExpense,
+        setExpenses
       }}
     >
       {children}
